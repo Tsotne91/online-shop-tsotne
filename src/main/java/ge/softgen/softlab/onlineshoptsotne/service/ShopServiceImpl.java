@@ -1,9 +1,11 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
-import ge.softgen.softlab.onlineshoptsotne.model.Products;
+import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +16,10 @@ public class ShopServiceImpl implements ShopService {
         this.productsRepository = productsRepository;
     }
 
-   public List<Products> findProducts(){
-        return productsRepository.findAll();
+    private static List<Product> products = new ArrayList<>();
+
+   public List<Product> findProducts(String product_name){
+       return productsRepository.findAll();
    }
 
     public void addProducts(){

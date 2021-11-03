@@ -1,16 +1,24 @@
 package ge.softgen.softlab.onlineshoptsotne.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+
+@Getter
+@Setter
+@NoArgsConstructor
+@SequenceGenerator(name= "EAN_Generator", sequenceName = "products_stock_EAN_Code_seq", initialValue = 0012312451234)
 @Entity
 @Table (name="products")
-@SequenceGenerator(name= "EAN_Generator", sequenceName = "products_stock_EAN_Code_seq")
-public class Products {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EAN_Generator")
+    @Column(name= "EAN_Code")
     private Integer EAN_Code;
     @Column(name="remaining")
     private Integer remaining;
@@ -20,6 +28,4 @@ public class Products {
     private Float sell_price;
     @Column(name="product_name")
     private String product_name;
-    public Products(){}
-
 }

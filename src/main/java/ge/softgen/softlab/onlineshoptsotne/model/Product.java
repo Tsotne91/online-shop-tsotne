@@ -8,7 +8,6 @@ import org.apache.tomcat.jni.Local;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,9 +16,9 @@ import java.time.LocalDate;
 @Table (name="products")
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EAN_Generator")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "EAN_Generator")
     @Column(name= "EAN_Code")
-    private Integer EAN_Code;
+    private String EAN_Code;
     @Column(name="remaining")
     private Integer remaining;
     @Column(name="category_id")

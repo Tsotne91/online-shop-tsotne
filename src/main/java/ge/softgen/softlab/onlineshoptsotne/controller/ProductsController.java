@@ -22,15 +22,14 @@ private final ShopServiceImpl shopService;
     //private static List<Product> products = new ArrayList<>();
     @GetMapping("/products")
     public List<Product> findProducts(@RequestParam(required = false) String product_name){
-         return shopService.findProducts(product_name);
+        return shopService.findProducts(product_name);
     }
 
-//    @PutMapping("/products")
-//    public void addingProducts(){
-//        throw new RuntimeException();
-//
-//    }
+    @PutMapping("/products")
+    public void addingProducts(){
+        throw new RuntimeException();
 
+    }
 
 //    @PutMapping("/products/{id}/sales");
 //    public void getProductsSold(){
@@ -40,6 +39,4 @@ private final ShopServiceImpl shopService;
 //    public void productBought(){
 //        shopService.productBought();
 //    }
-
-
 }

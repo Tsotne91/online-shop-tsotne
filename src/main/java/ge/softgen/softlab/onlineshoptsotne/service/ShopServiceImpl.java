@@ -18,12 +18,8 @@ public class ShopServiceImpl implements ShopService {
     }
    // private static List<Product> products = new ArrayList<>();
    public List<Product> findProducts(String product_name){
-       return productsRepository.findAll();
+        return productsRepository.findAll();
    }
-//    @PutMapping ("/products/")
-//    public ResponseEntity addProducts(@RequestBody Product product){
-//        return ResponseEntity.status(201).body(product);
-//    }
 
     public void productSold(/*@PathVariable int id ,@RequestBody record from DB*/){
         throw new RuntimeException();

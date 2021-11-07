@@ -4,6 +4,7 @@ import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopServiceImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,16 +20,16 @@ private final ShopServiceImpl shopService;
         this.shopService = shopService;
     }
 
-    private static List<Product> products = new ArrayList<>();
+  //  private static List<Product> products = new ArrayList<>();
     @GetMapping("")
     public List<Product> findProducts(@RequestParam(required = false) String product_name){
         return shopService.findProducts(product_name);
     }
 
-    @PutMapping("/")
-    public void addingProducts(){
-        throw new RuntimeException();
-
+    @PutMapping("")
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product product){
+        Product newProduct = shopService.addProduct(product);
+        return ResponseEntity.status(201).body(newProduct);
     }
 
 

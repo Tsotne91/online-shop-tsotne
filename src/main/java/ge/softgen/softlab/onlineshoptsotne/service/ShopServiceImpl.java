@@ -2,6 +2,7 @@ package ge.softgen.softlab.onlineshoptsotne.service;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +14,20 @@ import java.util.List;
 public class ShopServiceImpl implements ShopService {
     private final ProductsRepository productsRepository;
 
+    @Autowired
     public ShopServiceImpl(ProductsRepository productsRepository) {
         this.productsRepository = productsRepository;
     }
-   // private static List<Product> products = new ArrayList<>();
-   public List<Product> findProducts(String product_name){
+   private static List<Product> products = new ArrayList<>();
+
+    public List<Product> findProducts(String product_name){
         return productsRepository.findAll();
    }
+
+   public Product addProduct(Product product){
+       return productsRepository.save(product);
+   }
+
 
     public void productSold(/*@PathVariable int id ,@RequestBody record from DB*/){
         throw new RuntimeException();

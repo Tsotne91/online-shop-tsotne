@@ -11,14 +11,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-@SequenceGenerator(name= "EAN_Generator", sequenceName = "products_stock_EAN_Code_seq", initialValue = 0012312451234)
+@SequenceGenerator(name= "EAN_Generator", sequenceName = "products_stock_EAN_Code_seq")
 @Entity
 @Table (name="products")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "EAN_Generator")
-    @Column(name= "EAN_Code")
-    private String EAN_Code;
+    @Column(name= "ean_code")
+    private String ean_code;
     @Column(name="remaining")
     private Integer remaining;
     @Column(name="category_id")

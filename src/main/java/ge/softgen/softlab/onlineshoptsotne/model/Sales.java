@@ -10,4 +10,8 @@ public class Sales {
     private Integer id;
     @Column(name="sell_date")
     private LocalDate sell_date;
+    @Column(name="sell_price")
+    private float sell_price;
+    @Column(name="product_id")
+    private  Integer product_id;
 }

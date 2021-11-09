@@ -14,13 +14,11 @@ import java.util.List;
 @RequestMapping("/products")
 public class ProductsController {
 
-private final ShopServiceImpl shopService;
+private final ShopService shopService;
 
-    public ProductsController(ShopServiceImpl shopService) {
-        this.shopService = shopService;
-    }
+    public ProductsController(ShopService shopService) { this.shopService = shopService; }
 
-  //  private static List<Product> products = new ArrayList<>();
+    //  private static List<Product> products = new ArrayList<>();
     @GetMapping("")
     public List<Product> findProducts(@RequestParam(required = false) String product_name){
         return shopService.findProducts(product_name);

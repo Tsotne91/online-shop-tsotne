@@ -28,7 +28,6 @@ public class ShopServiceImpl implements ShopService {
        return productsRepository.save(product);
    }
 
-
     public void productSold(/*@PathVariable int id ,@RequestBody record from DB*/){
         throw new RuntimeException();
         //sold a product, subtract from products/remaining and add new record/column in sales

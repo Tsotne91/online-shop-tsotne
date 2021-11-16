@@ -1,40 +1,52 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
+import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import ge.softgen.softlab.onlineshoptsotne.repository.SalesRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ShopServiceImpl implements ShopService {
     private final ProductsRepository productsRepository;
+    private final SalesRepository salesRepository;
 
-    @Autowired
-    public ShopServiceImpl(ProductsRepository productsRepository) {
+    public ShopServiceImpl(ProductsRepository productsRepository, SalesRepository salesRepository) {
         this.productsRepository = productsRepository;
+        this.salesRepository = salesRepository;
     }
-   private static List<Product> products = new ArrayList<>();
 
-    public List<Product> findProducts(String product_name){
+    private static List<Product> products = new ArrayList<>();
+
+    public List<Product> findProducts(String productName){
         return productsRepository.findAll();
    }
 
-   public Product addProduct(Product product){
+     public Product addProduct(Product product){
        return productsRepository.save(product);
    }
 
-    public void productSold(/*@PathVariable int id ,@RequestBody record from DB*/){
-        throw new RuntimeException();
-        //sold a product, subtract from products/remaining and add new record/column in sales
-    }
+   public Sale sellProduct(String id){
+        //ვნახულობთ თუ გვაქვს პროდუქტი ცხრილში
+         //თუ ცხრილში products remaining დადებითია
+       //
+       Sale sale = new Sale();
+       sale.setProductId(id);
+       sale.setSellDate(LocalDate.now());
+        return salesRepository.save(sale);
+   }
 
-    public void productBought(/*@PathVariable int id ,@RequestBody record from DB*/){
-        throw new RuntimeException();
-        //bought a product, add to products/remaining and add a new record/column in sales
-    }
+//    public List<Product> seeSales(){
+//
+//    }
+
+
+//    public void productBought(Product product){
+//
+//
+//    }
 }

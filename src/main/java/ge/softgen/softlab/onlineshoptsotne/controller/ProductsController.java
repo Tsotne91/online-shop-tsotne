@@ -32,6 +32,7 @@ private final ShopService shopService;
     @PutMapping("{id}/sales")
     public Sale sellProduct(@PathVariable String id){
         Sale newSale = shopService.sellProduct(id);
+        return newSale;
     }
 
     //    @PutMapping ("/products/{id}/purchases");

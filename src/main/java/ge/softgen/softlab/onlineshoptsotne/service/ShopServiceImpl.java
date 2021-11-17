@@ -7,6 +7,7 @@ import ge.softgen.softlab.onlineshoptsotne.repository.SalesRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,10 +34,9 @@ public class ShopServiceImpl implements ShopService {
    public Sale sellProduct(String id){
         //ვნახულობთ თუ გვაქვს პროდუქტი ცხრილში
          //თუ ცხრილში products remaining დადებითია
-       //
        Sale sale = new Sale();
        sale.setProductId(id);
-       sale.setSellDate(LocalDate.now());
+       sale.setSellDate(LocalDateTime.now());
         return salesRepository.save(sale);
    }
 

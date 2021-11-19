@@ -21,7 +21,7 @@ public class ShopServiceImpl implements ShopService {
         this.salesRepository = salesRepository;
     }
 
-    private static List<Product> products = new ArrayList<>();
+    private static final List<Product> products = new ArrayList<>();
 
     public List<Product> findProducts(String productName){
         return productsRepository.findAll();
@@ -31,12 +31,17 @@ public class ShopServiceImpl implements ShopService {
        return productsRepository.save(product);
    }
 
-   public Sale sellProduct(String id){
+   public Sale sellProduct(String id) throws Exception {
         //ვნახულობთ თუ გვაქვს პროდუქტი ცხრილში
          //თუ ცხრილში products remaining დადებითია
+       var product = productsRepository
+               .findById(id)
+               .orElseThrow();
+
        Sale sale = new Sale();
        sale.setProductId(id);
        sale.setSellDate(LocalDateTime.now());
+
         return salesRepository.save(sale);
    }
 

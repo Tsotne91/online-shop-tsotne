@@ -9,7 +9,7 @@ public interface ShopService {
     Product addProduct(Product product);
     List findProducts(String product_name);
 
-    Sale sellProduct(String id);
+    Sale sellProduct(String id) throws Exception;
     //Sale sellProduct(Sale sales);
     //Product getProducts(String product_name);
 //    List seeSales();

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/products")
@@ -23,17 +24,25 @@ private final ShopService shopService;
         return shopService.findProducts(product_name);
     }
 
-    @PutMapping("")
+    @PostMapping("")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product product){
         Product newProduct = shopService.addProduct(product);
         return ResponseEntity.status(201).body(newProduct);
     }
 
-    @PutMapping("{id}/sales")
-    public Sale sellProduct(@PathVariable String id){
-        Sale newSale = shopService.sellProduct(id);
-        return newSale;
-    }
+
+    public record sellProductInfo(String id){}
+
+    //work in progress:
+//    @PostMapping("{id}/sales")
+//    public ResponseEntity<Void> sellProduct(@PathVariable String id) throws Exception {
+//       try {
+//           shopService.sellProduct(id);
+//       } catch(NoSuchElementException ignore) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//    }
 
     //    @PutMapping ("/products/{id}/purchases");
 //    public void productBought(){

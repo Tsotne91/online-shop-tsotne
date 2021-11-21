@@ -10,7 +10,7 @@ public interface ShopService {
     Product addProduct(Product product);
     List findProducts(String product_name);
 
-    Sale sellProduct(String id, ProductsController.sellProductInfo info) throws Exception;
+    void sellProduct(String id, ProductsController.sellProductInfo info) throws Exception;
     //Sale sellProduct(Sale sales);
     //Product getProducts(String product_name);
 //    List seeSales();

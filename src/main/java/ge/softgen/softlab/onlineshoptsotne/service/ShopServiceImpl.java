@@ -33,7 +33,7 @@ public class ShopServiceImpl implements ShopService {
        return productsRepository.save(product);
    }
 
-   public Sale sellProduct(String id, ProductsController.sellProductInfo info) throws Exception {
+   public void sellProduct(String id, ProductsController.sellProductInfo info) throws Exception {
         //ვნახულობთ თუ გვაქვს პროდუქტი ცხრილში
          //თუ ცხრილში products remaining დადებითია
         if(info.id() == null || StringUtils.isEmpty(info.id())){
@@ -42,12 +42,14 @@ public class ShopServiceImpl implements ShopService {
        var product = productsRepository
                .findById(id)
                .orElseThrow(()-> new ValidationException("Product not found"));
-
+       if(product.getRemaining()>0) {
+           Integer remaining = product.getRemaining() - 1;
+           product.setRemaining(remaining);
+       }
        Sale sale = new Sale();
        sale.setProductId(product.getEanCode());
        sale.setSellDate(LocalDateTime.now());
-
-        return salesRepository.save(sale);
+         salesRepository.save(sale);
    }
 
 //    public List<Product> seeSales(){

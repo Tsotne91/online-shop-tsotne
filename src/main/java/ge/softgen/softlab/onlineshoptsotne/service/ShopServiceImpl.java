@@ -1,12 +1,14 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
+import ge.softgen.softlab.onlineshoptsotne.controller.ProductsController;
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
 import ge.softgen.softlab.onlineshoptsotne.repository.SalesRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,15 +33,18 @@ public class ShopServiceImpl implements ShopService {
        return productsRepository.save(product);
    }
 
-   public Sale sellProduct(String id) throws Exception {
+   public Sale sellProduct(String id, ProductsController.sellProductInfo info) throws Exception {
         //ვნახულობთ თუ გვაქვს პროდუქტი ცხრილში
          //თუ ცხრილში products remaining დადებითია
+        if(info.id() == null || StringUtils.isEmpty(info.id())){
+            throw new ValidationException("no EAN code entered!");
+        }
        var product = productsRepository
                .findById(id)
-               .orElseThrow();
+               .orElseThrow(()-> new ValidationException("Product not found"));
 
        Sale sale = new Sale();
-       sale.setProductId(id);
+       sale.setProductId(product.getEanCode());
        sale.setSellDate(LocalDateTime.now());
 
         return salesRepository.save(sale);

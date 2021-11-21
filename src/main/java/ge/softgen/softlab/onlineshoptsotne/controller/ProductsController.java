@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import javax.validation.ValidationException;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,18 +33,23 @@ private final ShopService shopService;
     }
 
 
-    public record sellProductInfo(String id){}
+    public record sellProductInfo(@NotNull String id){}
 
-    //work in progress:
-//    @PostMapping("{id}/sales")
-//    public ResponseEntity<Void> sellProduct(@PathVariable String id) throws Exception {
-//       try {
-//           shopService.sellProduct(id);
-//       } catch(NoSuchElementException ignore) {
-//            return ResponseEntity.notFound().build();
-//        }
-//
-//    }
+
+    @PostMapping("{id}/sales")
+    public ResponseEntity<Void> sellProduct(@PathVariable String id, @RequestBody sellProductInfo info) throws Exception {
+       try {
+           shopService.sellProduct(id, info);
+           return ResponseEntity.accepted().build();
+       } catch(NoSuchElementException ignore) {
+            return ResponseEntity.notFound().build();
+       } catch(ValidationException ignore) {
+           return ResponseEntity.badRequest().build();
+       } catch (Exception e){
+           e.printStackTrace();
+           return ResponseEntity.internalServerError().build();
+       }
+    }
 
     //    @PutMapping ("/products/{id}/purchases");
 //    public void productBought(){

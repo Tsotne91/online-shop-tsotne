@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @Entity
-//@SequenceGenerator(name= "EAN_Generator", sequenceName = "products_stock_EAN_Code_seq")
+@SequenceGenerator(name= "saleIdGenerator",
+        sequenceName = "onlineshop.sales_id_seq",
+        allocationSize = 1)
 @Table(name = "sales")
 public class Sale {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "saleIdGenerator")
     private Integer id;
     @Column(name = "sell_date")
     private LocalDateTime sellDate;

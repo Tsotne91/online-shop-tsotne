@@ -5,6 +5,7 @@ import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 
 import javax.validation.ValidationException;
@@ -33,18 +34,16 @@ private final ShopService shopService;
     }
 
 
-    public record sellProductInfo(@NotNull String id){}
+    // public record sellProductInfo(@NotNull String id){}
 
 
     @PostMapping("{id}/sales")
-    public ResponseEntity<Void> sellProduct(@PathVariable String id, @RequestBody sellProductInfo info) throws Exception {
+    public ResponseEntity<Sale> sellProduct(@PathVariable String id){
        try {
-           shopService.sellProduct(id, info);
-           return ResponseEntity.accepted().build();
-       } catch(NoSuchElementException ignore) {
-            return ResponseEntity.notFound().build();
-       } catch(ValidationException ignore) {
-           return ResponseEntity.badRequest().build();
+           var sale = shopService.sellProduct(id);
+           return ResponseEntity.ok(sale);
+       } catch(HttpClientErrorException ignore) {
+            return ResponseEntity.status(ignore.getStatusCode()).build();
        } catch (Exception e){
            e.printStackTrace();
            return ResponseEntity.internalServerError().build();

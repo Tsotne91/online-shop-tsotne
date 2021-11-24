@@ -25,4 +25,6 @@ public class Product {
     private Float sellPrice;
     @Column(name="product_name")
     private String productName;
+    @Column(name="purchase_price")
+    private Float purchasePrice;
 }

@@ -1,6 +1,7 @@
 package ge.softgen.softlab.onlineshoptsotne.controller;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
+import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
 import org.springframework.http.ResponseEntity;
@@ -50,8 +51,13 @@ private final ShopService shopService;
        }
     }
 
-    //    @PutMapping ("/products/{id}/purchases");
-//    public void productBought(){
-//        shopService.productBought();
-//    }
+        @PostMapping ("{id}/purchases")
+        public ResponseEntity<Purchase> productBought(@PathVariable String id){
+              try {
+                 var purchase = shopService.productBought(id);
+                 return ResponseEntity.ok(purchase);
+              } catch (HttpClientErrorException ignore){
+                  return ResponseEntity.status(ignore.getStatusCode()).build();
+              }
+        }
 }

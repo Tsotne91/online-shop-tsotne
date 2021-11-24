@@ -1,6 +1,5 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
-import ge.softgen.softlab.onlineshoptsotne.controller.ProductsController;
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.HttpClientErrorException;
 
-import javax.xml.bind.ValidationException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -64,10 +62,9 @@ public class ShopServiceImpl implements ShopService {
                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,
                        "no EAN code entered!");
            }
-           if (!(productsRepository.findAll().contains(id))){
-               throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
-                       "This product is not in our shop");
-           }
+           productsRepository.findById(id)
+                   .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));
+
            var product = productsRepository
                    .findById(id)
                    .orElseThrow(() -> new HttpClientErrorException(HttpStatus.NOT_FOUND));

@@ -58,6 +58,9 @@ private final ShopService shopService;
                  return ResponseEntity.ok(purchase);
               } catch (HttpClientErrorException ignore){
                   return ResponseEntity.status(ignore.getStatusCode()).build();
+              } catch (Exception e) {
+                  e.printStackTrace();
+                  return ResponseEntity.internalServerError().build();
               }
         }
 }

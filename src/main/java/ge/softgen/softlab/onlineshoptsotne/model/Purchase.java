@@ -24,5 +24,5 @@ public class Purchase {
     @Column(name = "purchase_date")
     private LocalDateTime purchaseDate;
     @Column(name = "purchase_price")
-    private Float purchasePrice;
+    private Double purchasePrice;
 }

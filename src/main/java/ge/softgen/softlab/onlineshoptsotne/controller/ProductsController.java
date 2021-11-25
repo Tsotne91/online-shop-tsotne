@@ -3,19 +3,17 @@ package ge.softgen.softlab.onlineshoptsotne.controller;
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
+import ge.softgen.softlab.onlineshoptsotne.service.OfflineSaleDTO;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
 
 
-import javax.validation.ValidationException;
-import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("")
 public class ProductsController {
 
 private final ShopService shopService;
@@ -23,12 +21,12 @@ private final ShopService shopService;
     public ProductsController(ShopService shopService) { this.shopService = shopService; }
 
     //  private static List<Product> products = new ArrayList<>();
-    @GetMapping("")
+    @GetMapping("products")
     public List<Product> findProducts(@RequestParam(required = false) String product_name){
         return shopService.findProducts(product_name);
     }
 
-    @PostMapping("")
+    @PostMapping("products")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product product){
         Product newProduct = shopService.addProduct(product);
         return ResponseEntity.status(201).body(newProduct);
@@ -38,7 +36,7 @@ private final ShopService shopService;
     // public record sellProductInfo(@NotNull String id){}
 
 
-    @PostMapping("{id}/sales")
+    @PostMapping("products/{id}/sales")
     public ResponseEntity<Sale> sellProduct(@PathVariable String id){
        try {
            var sale = shopService.sellProduct(id);
@@ -51,8 +49,8 @@ private final ShopService shopService;
        }
     }
 
-        @PostMapping ("{id}/purchases")
-        public ResponseEntity<Purchase> productBought(@PathVariable String id){
+    @PostMapping ("products/{id}/purchases")
+    public ResponseEntity<Purchase> productBought(@PathVariable String id){
               try {
                  var purchase = shopService.productBought(id);
                  return ResponseEntity.ok(purchase);
@@ -63,4 +61,11 @@ private final ShopService shopService;
                   return ResponseEntity.internalServerError().build();
               }
         }
+
+       @PostMapping ("sales")
+        public List<Product> productsSold(@RequestBody List<OfflineSaleDTO> sales){
+
+
+        return null;
+       }
 }

@@ -22,9 +22,9 @@ public class Product {
     @Column(name="category_id")
     private Integer categoryId;
     @Column(name="sell_price")
-    private Float sellPrice;
+    private Double sellPrice;
     @Column(name="product_name")
     private String productName;
     @Column(name="purchase_price")
-    private Float purchasePrice;
+    private Double purchasePrice;
 }

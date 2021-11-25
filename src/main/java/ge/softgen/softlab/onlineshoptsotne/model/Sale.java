@@ -22,7 +22,7 @@ public class Sale {
     @Column(name = "sell_date")
     private LocalDateTime sellDate;
     @Column(name = "sell_price")
-    private Float sellPrice;
+    private Double sellPrice;
     @Column(name = "product_id")
     private String productId;
 }

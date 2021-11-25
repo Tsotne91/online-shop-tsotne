@@ -2,9 +2,11 @@ package ge.softgen.softlab.onlineshoptsotne.service;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
+import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
 import ge.softgen.softlab.onlineshoptsotne.repository.PurchasesRepository;
+import ge.softgen.softlab.onlineshoptsotne.repository.ReceiptsRepository;
 import ge.softgen.softlab.onlineshoptsotne.repository.SalesRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,7 @@ public class ShopServiceImpl implements ShopService {
     private final ProductsRepository productsRepository;
     private final SalesRepository salesRepository;
     private final PurchasesRepository purchasesRepository;
+    private final ReceiptsRepository receiptsRepository;
 
    //  private static final List<Product> products = new ArrayList<>();
 
@@ -57,7 +60,8 @@ public class ShopServiceImpl implements ShopService {
        return sale;
    }
 
-       public Purchase productBought(String id){
+   @Transactional
+   public Purchase productBought(String id){
            if(id == null || StringUtils.isEmpty(id)){
                throw new HttpClientErrorException(HttpStatus.BAD_REQUEST,
                        "no EAN code entered!");
@@ -78,10 +82,24 @@ public class ShopServiceImpl implements ShopService {
            purchasesRepository.save(purchase);
            return purchase;
          }
+
+      public List<Product> productsSold(List<OfflineSaleDTO> sales){
+        OfflineSaleDTO saleDTO = new OfflineSaleDTO();
+
+          Receipt receipt = new Receipt();
+          receipt.setReceiptDate(LocalDateTime.now());
+          double totalSum;
+//          for ( int i=0; i<sales.size(); ++i){
+//            totalSum += sales.get(i).getPrice();
+//          }
+          totalSum = sales.stream().mapToDouble(OfflineSaleDTO::getPrice).sum();
+          receipt.setSumPrice(totalSum);
+
+        return null;
+    }
+
 }
 
-//    public List<Product> seeSales(){
-//
-//    }
+
 
 

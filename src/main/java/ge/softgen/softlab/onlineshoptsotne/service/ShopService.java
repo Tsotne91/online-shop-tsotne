@@ -2,6 +2,7 @@ package ge.softgen.softlab.onlineshoptsotne.service;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
+import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface ShopService {
 
     Sale sellProduct(String id) throws Exception;
     Purchase productBought(String id);
-    List<Product> productsSold(List <OfflineSaleDTO> sales);
+    Receipt productsSold(List <OfflineSaleDTO> sales);
 }

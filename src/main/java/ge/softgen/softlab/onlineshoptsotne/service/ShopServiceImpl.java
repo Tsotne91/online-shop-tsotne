@@ -27,7 +27,6 @@ public class ShopServiceImpl implements ShopService {
     private final PurchasesRepository purchasesRepository;
     private final ReceiptsRepository receiptsRepository;
 
-   //  private static final List<Product> products = new ArrayList<>();
 
     public List<Product> findProducts(String productName){
         return productsRepository.findAll();
@@ -47,7 +46,7 @@ public class ShopServiceImpl implements ShopService {
                .findById(id)
                .orElseThrow(()-> new HttpClientErrorException(HttpStatus.NOT_FOUND));
        if (product.getRemaining()<=0) {
-           throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "No product in stock");
+         throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "No product in stock");
        }
        product.setRemaining(product.getRemaining()-1);
        productsRepository.save(product);
@@ -83,7 +82,7 @@ public class ShopServiceImpl implements ShopService {
            return purchase;
          }
 
-      public List<Product> productsSold(List<OfflineSaleDTO> sales){
+      public Receipt productsSold(List<OfflineSaleDTO> sales){
         OfflineSaleDTO saleDTO = new OfflineSaleDTO();
 
           Receipt receipt = new Receipt();
@@ -95,7 +94,7 @@ public class ShopServiceImpl implements ShopService {
           totalSum = sales.stream().mapToDouble(OfflineSaleDTO::getPrice).sum();
           receipt.setSumPrice(totalSum);
 
-        return null;
+        return receipt;
     }
 
 }

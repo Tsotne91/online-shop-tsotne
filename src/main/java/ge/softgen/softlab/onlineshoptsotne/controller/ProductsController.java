@@ -64,8 +64,7 @@ private final ShopService shopService;
 
        @PostMapping ("sales")
         public List<Product> productsSold(@RequestBody List<OfflineSaleDTO> sales){
-
-
-        return null;
+        var sale = shopService.productsSold(sales);
+        return sale;
        }
 }

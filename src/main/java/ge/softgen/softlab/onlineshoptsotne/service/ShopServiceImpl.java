@@ -84,11 +84,12 @@ public class ShopServiceImpl implements ShopService {
 
       public Receipt productsSold(List<OfflineSaleDTO> sales){
 
-        for (int i=0; i<sales.size(); ++i){
-            String id = sales.get(i).getId();
-            var product = productsRepository.findById(id).orElseThrow();
-            product.setRemaining(product.getRemaining()+1);
-        }
+          for (OfflineSaleDTO sale : sales) {
+              String id = sale.getId();
+              int quantity = sale.getQuantity();
+              var product = productsRepository.findById(id).orElseThrow();
+              product.setRemaining(product.getRemaining() - quantity);
+          }
 
 
           Receipt receipt = new Receipt();
@@ -99,7 +100,6 @@ public class ShopServiceImpl implements ShopService {
 //          }
           totalSum = sales.stream().mapToDouble(OfflineSaleDTO::getPrice).sum();
           receipt.setSumPrice(totalSum);
-
 
         return receipt;
     }

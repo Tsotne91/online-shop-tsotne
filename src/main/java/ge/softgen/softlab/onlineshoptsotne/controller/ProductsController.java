@@ -2,6 +2,7 @@ package ge.softgen.softlab.onlineshoptsotne.controller;
 
 import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
+import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.service.OfflineSaleDTO;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
@@ -63,8 +64,8 @@ private final ShopService shopService;
         }
 
        @PostMapping ("sales")
-        public List<Product> productsSold(@RequestBody List<OfflineSaleDTO> sales){
+        public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales){
         var sale = shopService.productsSold(sales);
-        return sale;
+        return ResponseEntity.ok(sale);
        }
 }

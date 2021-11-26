@@ -9,6 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OfflineSaleDTO {
 
+
 private String id;
 private Integer quantity;
 private Double price;

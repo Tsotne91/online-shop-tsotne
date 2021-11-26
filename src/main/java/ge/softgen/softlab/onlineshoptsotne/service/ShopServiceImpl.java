@@ -83,7 +83,13 @@ public class ShopServiceImpl implements ShopService {
          }
 
       public Receipt productsSold(List<OfflineSaleDTO> sales){
-        OfflineSaleDTO saleDTO = new OfflineSaleDTO();
+
+        for (int i=0; i<sales.size(); ++i){
+            String id = sales.get(i).getId();
+            var product = productsRepository.findById(id).orElseThrow();
+            product.setRemaining(product.getRemaining()+1);
+        }
+
 
           Receipt receipt = new Receipt();
           receipt.setReceiptDate(LocalDateTime.now());
@@ -93,6 +99,7 @@ public class ShopServiceImpl implements ShopService {
 //          }
           totalSum = sales.stream().mapToDouble(OfflineSaleDTO::getPrice).sum();
           receipt.setSumPrice(totalSum);
+
 
         return receipt;
     }

@@ -25,4 +25,8 @@ public class Sale {
     private Double sellPrice;
     @Column(name = "product_id")
     private String productId;
+    @Column(name = "receipt_id")
+    private Integer receiptID;
+    @Column(name = "quantity")
+    private Integer quantity;
 }

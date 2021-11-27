@@ -81,22 +81,9 @@ public class ShopServiceImpl implements ShopService {
 
       public Receipt productsSold(List<OfflineSaleDTO> sales){
 
-          for (OfflineSaleDTO receipt : sales) {
-              String saleId = receipt.getId();
-              int quantity = receipt.getQuantity();
-              var product = productsRepository.findById(saleId).orElseThrow();
-              product.setRemaining(product.getRemaining() - quantity);
-
-              Sale sale = new Sale();
-              sale.setProductId(product.getEanCode());
-              sale.setSellDate(LocalDateTime.now());
-              sale.setSellPrice(product.getSellPrice());
-              salesRepository.save(sale);
-          }
-
-
           Receipt receipt = new Receipt();
           receipt.setReceiptDate(LocalDateTime.now());
+
           double totalSum;
 //          for ( int i=0; i<sales.size(); ++i){
 //            totalSum += sales.get(i).getPrice();
@@ -105,8 +92,22 @@ public class ShopServiceImpl implements ShopService {
           receipt.setSumPrice(totalSum);
           receiptsRepository.save(receipt);
 
-        return receipt;
-    }
+          for (OfflineSaleDTO saleDTO : sales) {
+              String saleId = saleDTO.getId();
+              int quantity = saleDTO.getQuantity();
+              var product = productsRepository.findById(saleId).orElseThrow();
+              product.setRemaining(product.getRemaining() - quantity);
+
+              Sale sale = new Sale();
+              sale.setProductId(product.getEanCode());
+              sale.setSellDate(LocalDateTime.now());
+              sale.setSellPrice(product.getSellPrice());
+              sale.setReceiptID(receipt.getId());
+              salesRepository.save(sale);
+          }
+
+          return receipt;
+      }
 }
 
 

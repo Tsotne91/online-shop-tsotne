@@ -61,7 +61,7 @@ private final ShopService shopService;
               }
         }
 
-       @PostMapping ("sales")
+        @PostMapping("sales")
         public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales){
         var receipt = shopService.productsSold(sales);
         return ResponseEntity.ok(receipt);

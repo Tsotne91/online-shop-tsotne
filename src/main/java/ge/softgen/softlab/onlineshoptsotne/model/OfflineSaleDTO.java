@@ -1,4 +1,4 @@
-package ge.softgen.softlab.onlineshoptsotne.service;
+package ge.softgen.softlab.onlineshoptsotne.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class OfflineSaleDTO {
-
 
 private String id;
 private Integer quantity;

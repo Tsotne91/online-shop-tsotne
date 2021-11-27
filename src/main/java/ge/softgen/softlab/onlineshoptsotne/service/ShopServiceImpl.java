@@ -1,9 +1,6 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
-import ge.softgen.softlab.onlineshoptsotne.model.Product;
-import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
-import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
-import ge.softgen.softlab.onlineshoptsotne.model.Sale;
+import ge.softgen.softlab.onlineshoptsotne.model.*;
 import ge.softgen.softlab.onlineshoptsotne.repository.ProductsRepository;
 import ge.softgen.softlab.onlineshoptsotne.repository.PurchasesRepository;
 import ge.softgen.softlab.onlineshoptsotne.repository.ReceiptsRepository;
@@ -84,11 +81,17 @@ public class ShopServiceImpl implements ShopService {
 
       public Receipt productsSold(List<OfflineSaleDTO> sales){
 
-          for (OfflineSaleDTO sale : sales) {
-              String saleId = sale.getId();
-              int quantity = sale.getQuantity();
+          for (OfflineSaleDTO receipt : sales) {
+              String saleId = receipt.getId();
+              int quantity = receipt.getQuantity();
               var product = productsRepository.findById(saleId).orElseThrow();
               product.setRemaining(product.getRemaining() - quantity);
+
+              Sale sale = new Sale();
+              sale.setProductId(product.getEanCode());
+              sale.setSellDate(LocalDateTime.now());
+              sale.setSellPrice(product.getSellPrice());
+              salesRepository.save(sale);
           }
 
 
@@ -104,7 +107,6 @@ public class ShopServiceImpl implements ShopService {
 
         return receipt;
     }
-
 }
 
 

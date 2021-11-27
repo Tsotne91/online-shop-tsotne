@@ -1,9 +1,6 @@
 package ge.softgen.softlab.onlineshoptsotne.service;
 
-import ge.softgen.softlab.onlineshoptsotne.model.Product;
-import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
-import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
-import ge.softgen.softlab.onlineshoptsotne.model.Sale;
+import ge.softgen.softlab.onlineshoptsotne.model.*;
 
 import java.util.List;
 

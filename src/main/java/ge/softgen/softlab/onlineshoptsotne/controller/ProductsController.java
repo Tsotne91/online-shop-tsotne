@@ -4,7 +4,7 @@ import ge.softgen.softlab.onlineshoptsotne.model.Product;
 import ge.softgen.softlab.onlineshoptsotne.model.Purchase;
 import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
-import ge.softgen.softlab.onlineshoptsotne.service.OfflineSaleDTO;
+import ge.softgen.softlab.onlineshoptsotne.model.OfflineSaleDTO;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +33,7 @@ private final ShopService shopService;
         return ResponseEntity.status(201).body(newProduct);
     }
 
-
     // public record sellProductInfo(@NotNull String id){}
-
 
     @PostMapping("products/{id}/sales")
     public ResponseEntity<Sale> sellProduct(@PathVariable String id){
@@ -65,7 +63,7 @@ private final ShopService shopService;
 
        @PostMapping ("sales")
         public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales){
-        var sale = shopService.productsSold(sales);
-        return ResponseEntity.ok(sale);
+        var receipt = shopService.productsSold(sales);
+        return ResponseEntity.ok(receipt);
        }
 }

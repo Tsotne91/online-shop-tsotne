@@ -97,11 +97,12 @@ public class ShopServiceImpl implements ShopService {
               int quantity = saleDTO.getQuantity();
               var product = productsRepository.findById(saleId).orElseThrow();
               product.setRemaining(product.getRemaining() - quantity);
+              productsRepository.save(product);
 
               Sale sale = new Sale();
               sale.setProductId(product.getEanCode());
               sale.setSellDate(LocalDateTime.now());
-              sale.setSellPrice(product.getSellPrice());
+              sale.setSellPrice(saleDTO.getPrice());
               sale.setReceiptID(receipt.getId());
               salesRepository.save(sale);
           }

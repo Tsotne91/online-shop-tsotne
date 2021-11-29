@@ -6,6 +6,7 @@ import ge.softgen.softlab.onlineshoptsotne.model.Receipt;
 import ge.softgen.softlab.onlineshoptsotne.model.Sale;
 import ge.softgen.softlab.onlineshoptsotne.model.OfflineSaleDTO;
 import ge.softgen.softlab.onlineshoptsotne.service.ShopService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpClientErrorException;
@@ -21,21 +22,23 @@ private final ShopService shopService;
 
     public ProductsController(ShopService shopService) { this.shopService = shopService; }
 
-    //  private static List<Product> products = new ArrayList<>();
+
     @GetMapping("products")
+    @Operation(tags = {"find"}, description = "Finds all products")
     public List<Product> findProducts(@RequestParam(required = false) String product_name){
         return shopService.findProducts(product_name);
     }
 
     @PostMapping("products")
+    @Operation(tags = {"add"}, description = "Adds a new product")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product product){
         Product newProduct = shopService.addProduct(product);
         return ResponseEntity.status(201).body(newProduct);
     }
 
-    // public record sellProductInfo(@NotNull String id){}
 
     @PostMapping("products/{id}/sales")
+    @Operation(tags = {"sell"}, description = "Sells a product based on EAN code")
     public ResponseEntity<Sale> sellProduct(@PathVariable String id){
        try {
            var sale = shopService.sellProduct(id);
@@ -48,7 +51,8 @@ private final ShopService shopService;
        }
     }
 
-    @PostMapping ("products/{id}/purchases")
+    @PostMapping("products/{id}/purchases")
+    @Operation(tags = {"buy"}, description = "Buys a product")
     public ResponseEntity<Purchase> productBought(@PathVariable String id){
               try {
                   var purchase = shopService.productBought(id);
@@ -62,6 +66,7 @@ private final ShopService shopService;
     }
 
     @PostMapping("sales")
+    @Operation(tags = {"sales"}, description = "see sales")
     public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales) {
         try {
             var receipt = shopService.productsSold(sales);

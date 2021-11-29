@@ -103,6 +103,7 @@ public class ShopServiceImpl implements ShopService {
               sale.setProductId(product.getEanCode());
               sale.setSellDate(LocalDateTime.now());
               sale.setSellPrice(saleDTO.getPrice());
+              sale.setQuantity(saleDTO.getQuantity());
               sale.setReceiptID(receipt.getId());
               salesRepository.save(sale);
           }

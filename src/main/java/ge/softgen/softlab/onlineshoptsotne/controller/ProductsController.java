@@ -51,19 +51,26 @@ private final ShopService shopService;
     @PostMapping ("products/{id}/purchases")
     public ResponseEntity<Purchase> productBought(@PathVariable String id){
               try {
-                 var purchase = shopService.productBought(id);
-                 return ResponseEntity.ok(purchase);
-              } catch (HttpClientErrorException ignore){
+                  var purchase = shopService.productBought(id);
+                  return ResponseEntity.ok(purchase);
+              } catch (HttpClientErrorException ignore) {
                   return ResponseEntity.status(ignore.getStatusCode()).build();
               } catch (Exception e) {
                   e.printStackTrace();
                   return ResponseEntity.internalServerError().build();
               }
-        }
+    }
 
-        @PostMapping("sales")
-        public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales){
-        var receipt = shopService.productsSold(sales);
-        return ResponseEntity.ok(receipt);
-       }
+    @PostMapping("sales")
+    public ResponseEntity<Receipt> productsSold(@RequestBody List<OfflineSaleDTO> sales) {
+        try {
+            var receipt = shopService.productsSold(sales);
+            return ResponseEntity.ok(receipt);
+        } catch (HttpClientErrorException ignore) {
+            return ResponseEntity.status(ignore.getStatusCode()).build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }
